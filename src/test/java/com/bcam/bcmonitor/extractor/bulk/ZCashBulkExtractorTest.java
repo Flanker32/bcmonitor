@@ -4,8 +4,7 @@ import com.bcam.bcmonitor.extractor.client.ReactiveZCashClient;
 import com.bcam.bcmonitor.model.ZCashBlock;
 import com.bcam.bcmonitor.model.ZCashTransaction;
 import com.bcam.bcmonitor.storage.BlockRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,14 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 @ActiveProfiles("mockZCashConfiguration")
 @SpringBootTest
-@RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(properties = {
         "BITCOIN_HOSTNAME=localhost", "BITCOIN_PORT=9998", "BITCOIN_UN=bitcoinuser1", "BITCOIN_PW=password", "DASH_HOSTNAME=localhost", "DASH_PORT=9998", "DASH_UN=dashuser1", "DASH_PW=password", "ZCASH_HOSTNAME=localhost", "ZCASH_PORT=9998", "ZCASH_UN=dashuser1", "ZCASH_PW=password","MONERO_HOSTNAME=localhost", "MONERO_PORT=9998", "MONERO_UN=dashuser1", "MONERO_PW=password", "MONGO_PW=foo"})
 public class ZCashBulkExtractorTest {
@@ -85,25 +82,12 @@ public class ZCashBulkExtractorTest {
 
         StepVerifier
                 .create(insertedBlocks)
-                .assertNext(insertedBlock -> {
-                    logger.info("Got block " + insertedBlock + "confirmations " + insertedBlock.getConfirmations());
-                    // assertEquals("hash0", insertedBlock.getHash());
-                    // assertEquals(0L, insertedBlock.getHeight());
-                    // assertEquals(2, insertedBlock.getConfirmations());
-                })
-                .assertNext(insertedBlock -> {
-                    logger.info("Got block " + insertedBlock + "confirmations " + insertedBlock.getConfirmations());
-                    // assertEquals("hash1", insertedBlock.getHash());
-                    // assertEquals(1L, insertedBlock.getHeight());
-                    // assertEquals(1, insertedBlock.getConfirmations());
-
-                })
-                .assertNext(insertedBlock -> {
-                    logger.info("Got block " + insertedBlock + "confirmations " + insertedBlock.getConfirmations());
-                    // assertEquals("hash2", insertedBlock.getHash());
-                    // assertEquals(2L, insertedBlock.getHeight());
-                    // assertEquals(0, insertedBlock.getConfirmations());
-                })
+                .assertNext(insertedBlock ->
+                    logger.info("Got block " + insertedBlock + "confirmations " + insertedBlock.getConfirmations()))
+                .assertNext(insertedBlock ->
+                    logger.info("Got block " + insertedBlock + "confirmations " + insertedBlock.getConfirmations()))
+                .assertNext(insertedBlock ->
+                    logger.info("Got block " + insertedBlock + "confirmations " + insertedBlock.getConfirmations()))
                 .expectComplete()
                 .verify();
     }

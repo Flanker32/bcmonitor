@@ -7,14 +7,13 @@ import com.bcam.bcmonitor.model.BlockchainInfo;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.validation.constraints.Null;
+import jakarta.validation.constraints.Null;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -46,7 +45,6 @@ public class BlockchainTracker {
     private ReactiveDashClient dashClient;
     private ReactiveZCashClient zCashClient;
 
-    @Autowired
     public BlockchainTracker(ReactiveBitcoinClient bitcoinClient, ReactiveDashClient dashClient, ReactiveZCashClient zCashClient) {
 
         this.bitcoinClient = bitcoinClient;

@@ -6,7 +6,7 @@ import com.bcam.bcmonitor.extractor.client.ReactiveZCashClient;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 // @Component
 public class BlockchainTrackerFactory extends AbstractFactoryBean <BlockchainTracker> {

@@ -1,7 +1,6 @@
 package com.bcam.bcmonitor.api;
 
 import com.bcam.bcmonitor.extractor.client.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +16,6 @@ public class ClientRequestController {
     private ReactiveDashClient dashClient;
     private ReactiveBitcoinClient bitcoinClient;
 
-    @Autowired
     public ClientRequestController(
             ReactiveZCashClient zCashClient,
             ReactiveDashClient dashClient,

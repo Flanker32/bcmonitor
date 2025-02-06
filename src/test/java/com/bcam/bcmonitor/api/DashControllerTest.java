@@ -3,17 +3,15 @@ package com.bcam.bcmonitor.api;
 import com.bcam.bcmonitor.BitcoinRPCResponses;
 import com.bcam.bcmonitor.DashRPCResponses;
 import com.bcam.bcmonitor.model.*;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
 @AutoConfigureWebTestClient
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
         "BITCOIN_HOSTNAME=localhost", "BITCOIN_PORT=9998", "BITCOIN_UN=bitcoinuser1", "BITCOIN_PW=password", "DASH_HOSTNAME=localhost", "DASH_PORT=9998", "DASH_UN=dashuser1", "DASH_PW=password", "ZCASH_HOSTNAME=localhost", "ZCASH_PORT=9998", "ZCASH_UN=dashuser1", "ZCASH_PW=password","MONERO_HOSTNAME=localhost", "MONERO_PORT=9998", "MONERO_UN=dashuser1", "MONERO_PW=password", "MONGO_PW=foo"})
@@ -33,12 +30,12 @@ public class DashControllerTest {
 
     private ClientAndServer mockServer;
 
-    @Before
+    @BeforeEach
     public void startServer() {
         mockServer = startClientAndServer(9998);
     }
 
-    @After
+    @AfterEach
     public void stopServer() {
         mockServer.stop();
     }
@@ -77,9 +74,8 @@ public class DashControllerTest {
                 .expectStatus().isOk()
                 .expectBody(BitcoinBlock.class).isEqualTo(expectedBlock)
                 // .returnResult();
-                .consumeWith(result -> {
-                    Assertions.assertIterableEquals(result.getResponseBody().getTxids(), expectedBlock.getTxids());
-                });
+                .consumeWith(result ->
+                    Assertions.assertIterableEquals(result.getResponseBody().getTxids(), expectedBlock.getTxids()));
     }
 
     @Test
@@ -113,9 +109,8 @@ public class DashControllerTest {
                 .expectStatus().isOk()
                 .expectBody(BitcoinBlock.class).isEqualTo(expectedBlock)
                 // .returnResult();
-                .consumeWith(result -> {
-                    Assertions.assertIterableEquals(result.getResponseBody().getTxids(), expectedBlock.getTxids());
-                });
+                .consumeWith(result ->
+                    Assertions.assertIterableEquals(result.getResponseBody().getTxids(), expectedBlock.getTxids()));
     }
 
     @Test

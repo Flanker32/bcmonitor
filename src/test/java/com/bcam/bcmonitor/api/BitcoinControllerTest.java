@@ -3,11 +3,10 @@ package com.bcam.bcmonitor.api;
 import com.bcam.bcmonitor.BitcoinRPCResponses;
 import com.bcam.bcmonitor.model.*;
 import com.bcam.bcmonitor.storage.BlockRepository;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -26,13 +24,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
 @AutoConfigureWebTestClient
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
         "BITCOIN_HOSTNAME=localhost", "BITCOIN_PORT=9998", "BITCOIN_UN=bitcoinuser1", "BITCOIN_PW=password", "DASH_HOSTNAME=localhost", "DASH_PORT=9998", "DASH_UN=dashuser1", "DASH_PW=password", "ZCASH_HOSTNAME=localhost", "ZCASH_PORT=9998", "ZCASH_UN=dashuser1", "ZCASH_PW=password","MONERO_HOSTNAME=localhost", "MONERO_PORT=9998", "MONERO_UN=dashuser1", "MONERO_PW=password", "MONGO_PW=foo"})
@@ -49,12 +46,12 @@ public class BitcoinControllerTest {
 
     private ClientAndServer mockServer;
 
-    @Before
+    @BeforeEach
     public void startServer() {
         mockServer = startClientAndServer(9998);
     }
 
-    @After
+    @AfterEach
     public void stopServer() {
         mockServer.stop();
     }
@@ -152,9 +149,8 @@ public class BitcoinControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(BitcoinBlock.class).isEqualTo(expectedBlock)
-                .consumeWith(result -> {
-                    Assertions.assertIterableEquals(result.getResponseBody().getTxids(), expectedBlock.getTxids());
-                });
+                .consumeWith(result ->
+                    Assertions.assertIterableEquals(result.getResponseBody().getTxids(), expectedBlock.getTxids()));
     }
 
     @Test
@@ -331,9 +327,8 @@ public class BitcoinControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(String.class)
-                .consumeWith(result -> {
-                    Assertions.assertTrue(result.getResponseBody().startsWith("{\"hash\""));
-                });
+                .consumeWith(result ->
+                    Assertions.assertTrue(result.getResponseBody().startsWith("{\"hash\"")));
     }
 
     @WithMockUser
@@ -356,9 +351,8 @@ public class BitcoinControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(String.class)
-                .consumeWith(result -> {
-                    Assertions.assertTrue(result.getResponseBody().startsWith("{\"hash\""));
-                });
+                .consumeWith(result ->
+                    Assertions.assertTrue(result.getResponseBody().startsWith("{\"hash\"")));
     }
 
 
@@ -382,9 +376,8 @@ public class BitcoinControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(String.class)
-                .consumeWith(result -> {
-                    Assertions.assertTrue(result.getResponseBody().startsWith("{\"hash\""));
-                });
+                .consumeWith(result ->
+                    Assertions.assertTrue(result.getResponseBody().startsWith("{\"hash\"")));
     }
 
     @WithMockUser
@@ -407,9 +400,8 @@ public class BitcoinControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(String.class)
-                .consumeWith(result -> {
-                    Assertions.assertTrue(result.getResponseBody().startsWith("{\"hash\""));
-                });
+                .consumeWith(result ->
+                    Assertions.assertTrue(result.getResponseBody().startsWith("{\"hash\"")));
     }
 
     @Test

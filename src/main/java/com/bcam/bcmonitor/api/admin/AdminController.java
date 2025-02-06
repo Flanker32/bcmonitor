@@ -6,7 +6,6 @@ import com.bcam.bcmonitor.scheduler.BlockchainTracker;
 import com.bcam.bcmonitor.scheduler.ExtractionScheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -27,7 +26,6 @@ public class AdminController {
     private BulkExtractor<ZCashBlock, ZCashTransaction> zCashBulkExtractor;
 
 
-    @Autowired
     AdminController(ExtractionScheduler scheduler, BlockchainTracker tracker, BulkExtractor<BitcoinBlock, BitcoinTransaction> bitcoinBulkExtractor, BulkExtractor<DashBlock, DashTransaction> dashBulkExtractor, BulkExtractor<ZCashBlock, ZCashTransaction> zCashBulkExtractor) {
 
         this.scheduler = scheduler;

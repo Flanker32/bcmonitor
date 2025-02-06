@@ -1,7 +1,6 @@
 package com.bcam.bcmonitor.storage;
 
 import com.bcam.bcmonitor.model.BitcoinBlock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -12,7 +11,6 @@ public class MongoService<T> {
 
     final ReactiveMongoTemplate template;
 
-    @Autowired
     public MongoService(ReactiveMongoTemplate template) {
         this.template = template;
     }

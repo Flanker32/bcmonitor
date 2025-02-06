@@ -1,12 +1,12 @@
 package com.bcam.bcmonitor.extractor.rpc;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpResponseException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.core5.http.io.HttpClientResponseHandler;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.message.StatusLine;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpResponse;
+import org.apache.hc.client5.http.ClientProtocolException;
+import org.apache.hc.client5.http.HttpResponseException;
 
 
 import java.io.IOException;
@@ -19,13 +19,13 @@ import java.io.IOException;
  * Handleresponse must return value of type ResponseHandler<T>
  *
  */
-public class HTTPResponseHandler implements ResponseHandler<String> {
+public class HTTPResponseHandler implements HttpClientResponseHandler<String> {
 
     @Override
     public String handleResponse(HttpResponse response) throws IOException {
 
         // TODO add better error handling
-        StatusLine statusLine = response.getStatusLine();
+        StatusLine statusLine = new StatusLine(response);
         HttpEntity entity = response.getEntity();
         if (statusLine.getStatusCode() >= 300) {
             throw new HttpResponseException(
